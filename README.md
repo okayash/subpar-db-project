@@ -1,4 +1,4 @@
-CS2300 – Database Project Final
+# CS2300 – Database Project Final
 Submission Rubric
 
 
