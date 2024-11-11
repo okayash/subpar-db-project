@@ -1,4 +1,5 @@
--- tables -- 
+-- create tables -- 
+CREATE database perfumedb;
 
 CREATE TABLE Fragrance (
   name VARCHAR(80) PRIMARY KEY,
@@ -26,3 +27,4 @@ CREATE TABLE Cologne (
 CREATE TABLE (
 
 );
+
