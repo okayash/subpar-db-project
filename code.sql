@@ -1,3 +1,5 @@
+-- tables -- 
+
 CREATE TABLE Fragrance (
   name VARCHAR(80) PRIMARY KEY,
   rating INT,
@@ -9,5 +11,18 @@ CREATE TABLE Scentfamily (
 );
 
 CREATE TABLE Users (
-  username VARCHAR(45) PRIMARY KEY;
+  username VARCHAR(45) PRIMARY KEY,
+  preferances VARCHAR(45);
+);
+
+CREATE TABLE Perfume (
+  
+);
+
+CREATE TABLE Cologne (
+  
+);
+
+CREATE TABLE (
+
 );
