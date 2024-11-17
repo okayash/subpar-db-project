@@ -5,3 +5,6 @@ Values ('jhag', 2024);
 
 INSERT INTO Fragrance(fname, rating, creator, ftop, fheart,fbase,fline)
 VALUES('juliette', 8, 'roman ricci', 'a', 'b', 'c', 'jhag');
+
+INSERT INTO Users(username, password)
+VALUES('miroheiskanen', 'newpassword');
