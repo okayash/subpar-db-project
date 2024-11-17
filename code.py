@@ -4,6 +4,7 @@ import os
 
 # connect details here
 
+cursor = db_connection.cursor()
 # create user
 
 # 
