@@ -1,7 +1,7 @@
 -- database -- 
 CREATE database perfumedb;
 
--- tables
+-- tables --
 CREATE TABLE Fragrance (
   fname VARCHAR(80) PRIMARY KEY,
   rating INT,
@@ -16,11 +16,16 @@ CREATE TABLE Fragrance (
 );
 
 CREATE TABLE Scentfamily (
-  sname VARHCHAR (45) PRIMARY KEY
+  sname VARCHAR (45) PRIMARY KEY
 );
 
 CREATE TABLE Subfamily (
+  sfamilyname VARCHAR(45);
+  characteristic VARCHAR(50);
   
+  FOREIGN KEY (sfamilyname) REFERENCES Scentfamily(sname)
+
+  PRIMARY KEY (sfamilyname, characteristic)
 );
 
 CREATE TABLE PerfumeLine (
@@ -35,10 +40,12 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Perfume (
-    pname VARCHAR(45) PRIMARY KEY,
+    pname VARCHAR(45),
+    oilper INT,
+    sillage INT,
 
-    FOREIGN KEY (pname) REFERENCES Fragrance(fname)
-  
+    FOREIGN KEY (pname) REFERENCES Fragrance(fname),
+    PRIMARY KEY (pname, oilper)
 );
 
 CREATE TABLE Perfumer (
@@ -47,13 +54,17 @@ CREATE TABLE Perfumer (
 );
 
 CREATE TABLE Cologne (
+  cname VARCHAR(45),
+  oilper INT,
+  timetoreapply FLOAT(10), 
   
-);
-
-CREATE TABLE Concentration (
-  
+  FOREIGN KEY (cname) REFERENCES Fragrance(fname),
+  PRIMARY KEY (cname, oilper)
 );
 
 CREATE TABLE F_release_date(
-
+  fname VARCHAR(45) PRIMARY KEY,
+  month INT,
+  year INT,
+  FOREIGN KEY (fname) REFERENCES Fragarance(fname)
 );
