@@ -4,12 +4,12 @@ CREATE database perfumedb;
 -- tables --
 CREATE TABLE PerfumeLine (
   pline VARCHAR(45) PRIMARY KEY,
-  pyear int
+  pyear INTEGER
 );
 
 CREATE TABLE Fragrance (
   fname VARCHAR(80) PRIMARY KEY,
-  rating INT,
+  rating INTEGER,
   creator VARCHAR(80) NOT NULL,
   ftop VARCHAR(45),
   fheart VARCHAR(45),
@@ -42,8 +42,8 @@ CREATE TABLE Users (
 
 CREATE TABLE Perfume (
     pname VARCHAR(45),
-    oilper INT,
-    sillage INT,
+    oilper INTEGER,
+    sillage INTEGER,
 
     FOREIGN KEY (pname) REFERENCES Fragrance(fname),
     PRIMARY KEY (pname, oilper)
@@ -56,7 +56,7 @@ CREATE TABLE Perfumer (
 
 CREATE TABLE Cologne (
   cname VARCHAR(45),
-  oilper INT,
+  oilper INTEGER,
   time_reapplication FLOAT(10), 
   
   FOREIGN KEY (cname) REFERENCES Fragrance(fname),
@@ -65,8 +65,8 @@ CREATE TABLE Cologne (
 
 CREATE TABLE F_release_date(
   fname VARCHAR(45) PRIMARY KEY,
-  month INT,
-  year INT NOT NULL,
+  month INTEGER,
+  year INTEGER NOT NULL,
   FOREIGN KEY (fname) REFERENCES Fragrance(fname)
 );
 
