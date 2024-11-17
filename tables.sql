@@ -15,11 +15,8 @@ CREATE TABLE Fragrance (
   fheart VARCHAR(45),
   fbase VARCHAR(45),
   fline VARCHAR(45),
-  username VARCHAR(45),
 
   FOREIGN KEY (fline) REFERENCES PerfumeLine(pline),
-  FOREIGN KEY username REFERENCES Users(username)
-
 );
 
 CREATE TABLE Scentfamily (
@@ -39,7 +36,7 @@ CREATE TABLE Subfamily (
 CREATE TABLE Users (
   username VARCHAR(45) PRIMARY KEY,
   preferences VARCHAR(45),
-  password VARCHAR(45)
+  password VARCHAR(45) NOT NULL
 
 );
 
@@ -60,15 +57,25 @@ CREATE TABLE Perfumer (
 CREATE TABLE Cologne (
   cname VARCHAR(45),
   oilper INT,
-  timetoreapply FLOAT(10), 
+  time_reapplication FLOAT(10), 
   
   FOREIGN KEY (cname) REFERENCES Fragrance(fname),
   PRIMARY KEY (cname, oilper)
 );
 
-CREATE TABLE Freleasedate(
+CREATE TABLE F_release_date(
   fname VARCHAR(45) PRIMARY KEY,
   month INT,
-  year INT,
-  FOREIGN KEY (fname) REFERENCES Fragarance(fname)
+  year INT NOT NULL,
+  FOREIGN KEY (fname) REFERENCES Fragrance(fname)
 );
+
+CREATE TABLE user_collection(
+  fname VARCHAR(45),
+  user_id VARCHAR(45),
+  FOREIGN KEY fname REFERENCES Fragrance(fname),
+  FOREIGN KEY user_id REFERENCES Users(username),
+  PRIMARY KEY (fname, user_id)
+);
+
+
