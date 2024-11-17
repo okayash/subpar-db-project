@@ -16,7 +16,7 @@ CREATE TABLE Fragrance (
   fbase VARCHAR(45),
   fline VARCHAR(45),
 
-  FOREIGN KEY (fline) REFERENCES PerfumeLine(pline),
+  FOREIGN KEY (fline) REFERENCES PerfumeLine(pline)
 );
 
 CREATE TABLE Scentfamily (
