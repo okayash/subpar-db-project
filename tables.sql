@@ -2,12 +2,12 @@
 CREATE database perfumedb;
 
 -- tables --
-CREATE TABLE PerfumeLine (
+CREATE TABLE PerfumeLine(
   pline VARCHAR(45) PRIMARY KEY,
   pyear INTEGER
 );
 
-CREATE TABLE Fragrance (
+CREATE TABLE Fragrance(
   fname VARCHAR(80) PRIMARY KEY,
   rating INTEGER,
   creator VARCHAR(80) NOT NULL,
@@ -15,50 +15,38 @@ CREATE TABLE Fragrance (
   fheart VARCHAR(45),
   fbase VARCHAR(45),
   fline VARCHAR(45),
-
   FOREIGN KEY (fline) REFERENCES PerfumeLine(pline)
 );
 
-CREATE TABLE Scentfamily (
-  sname VARCHAR (45) PRIMARY KEY
-);
-
-CREATE TABLE Subfamily (
+CREATE TABLE Family(
   sfamilyname VARCHAR(45),
   characteristic VARCHAR(50),
-  
-  FOREIGN KEY (sfamilyname) REFERENCES Scentfamily(sname),
-
   PRIMARY KEY (sfamilyname, characteristic)
-
 );
 
-CREATE TABLE Users (
+CREATE TABLE Users(
   username VARCHAR(45) PRIMARY KEY,
   preferences VARCHAR(45),
   password VARCHAR(45) NOT NULL
-
 );
 
-CREATE TABLE Perfume (
+CREATE TABLE Perfume(
     pname VARCHAR(45),
     oilper INTEGER,
     sillage INTEGER,
-
     FOREIGN KEY (pname) REFERENCES Fragrance(fname),
     PRIMARY KEY (pname, oilper)
 );
 
-CREATE TABLE Perfumer (
+CREATE TABLE Perfumer(
     pfname VARCHAR(45) PRIMARY KEY,
     pcompany VARCHAR(45)
 );
 
-CREATE TABLE Cologne (
+CREATE TABLE Cologne(
   cname VARCHAR(45),
   oilper INTEGER,
-  time_reapplication FLOAT(10), 
-  
+  time_reapplication INTEGER,
   FOREIGN KEY (cname) REFERENCES Fragrance(fname),
   PRIMARY KEY (cname, oilper)
 );
