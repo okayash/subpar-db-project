@@ -17,13 +17,7 @@ CREATE TABLE PerfumeLine(
 CREATE TABLE Fragrance(
   fname VARCHAR(80),
   rating INTEGER,
-  creator VARCHAR(80) NOT NULL,
-  ftop VARCHAR(45),
-  fheart VARCHAR(45),
-  fbase VARCHAR(45),
-  fline VARCHAR(45),
   username VARCHAR(45) NOT NULL,
-  FOREIGN KEY (fline) REFERENCES PerfumeLine(pline),
   PRIMARY KEY(fname, username)
 );
 
@@ -41,11 +35,6 @@ CREATE TABLE Perfume(
     PRIMARY KEY (pname, oilper)
 );
 
-CREATE TABLE Perfumer(
-    pfname VARCHAR(45) PRIMARY KEY,
-    pcompany VARCHAR(45)
-);
-
 CREATE TABLE Cologne(
   cname VARCHAR(45),
   oilper INTEGER,
@@ -61,3 +50,19 @@ CREATE TABLE F_release_date(
   FOREIGN KEY (fname) REFERENCES Fragrance(fname)
 );
 
+CREATE TABLE Perfume_details(
+  fname VARCHAR(45),
+  creator VARCHAR(80) NOT NULL,
+  ftop VARCHAR(45),
+  fheart VARCHAR(45),
+  fbase VARCHAR(45),
+  fline VARCHAR(45),
+  FOREIGN KEY (fname) REFERENCES Fragrance(fname),
+  PRIMARY KEY (fname, creator)
+);
+
+CREATE TABLE Perfumer(
+  pfname VARCHAR(45) PRIMARY KEY,
+  pcompany VARCHAR(45),
+  FOREIGN KEY (pfname) REFERENCES Perfume_details(creator)  
+);
