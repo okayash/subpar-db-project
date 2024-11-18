@@ -16,30 +16,32 @@ sign_in = False
 
 # login
 def login():
-  username = input("username: ")
-  mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
-  user = mycursor.fetchone()
+  sign_in = False
+  while not sign_in:
+    username = input("username: ")
+    mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
+    user = mycursor.fetchone()
 
-  while not user:
-    print(f"username {username} not found.")
-    login()
+    if not user:
+      print(f"username {username} not found.")
+      continue
   
-  attempts = 0  
-  while attempts < 5:
-    password = input("password: ")
+    attempts = 0  
+    while attempts < 5:
+      password = input("password: ")
 
-    if user[2] == password: # check stored passwords
-      print("successfully logged in!")
-      sign_in = True # user has successfully signed in
-      return (user[0])
-
-
-    print("Incorrect password")
-    attempts += 1
-    password = input("Password: ")
+      if user[2] == password: # check stored passwords
+        print("successfully logged in!")
+        sign_in = True # user has successfully signed in
+        return (user[0])
+        break
     
-  print("Login attempts exceeded")
-  return None
+      else:
+        print("Incorrect password")
+        attempts += 1
+    
+    print("Login attempts exceeded. Exiting.")
+    return None
  
 # print user's perfume
 def print_user_perfume(username):
@@ -195,7 +197,9 @@ def adduser():
       mycursor.execute(sql, values)
       db_connection.commit()
       print(f"User: {username} successfully created with credentials: \nUsername: {username}\nFirst Name: {first_name}")
-  
+
+      return username
+
   except mysql.connector.Error as err:
       print(f"An error occurred: {err}")   
     
@@ -208,7 +212,8 @@ def menu():
       user = login()
       return user
     elif menuSelect == 2:
-        adduser()
+       newuser = adduser()
+       return newuser
     else:
       print("Please select a valid option.")
       menu()
