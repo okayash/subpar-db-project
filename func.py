@@ -109,8 +109,26 @@ def insert_perfumer():
 # deletion
 
 # perfume deletion
-def remove_perfume():
+def remove_perfume(username):
   print("You are a removing a perfume")
+  name = input("Name of perfume to delete:\n")
+  mycursor.execute("SELECT * FROM Fragrance WHERE fname = (%s) AND username = (%s)", (name,username,))
+  remv_perfume = mycursor.fetchone()
+  
+  if remv_perfume:
+    try: 
+      sql = "DELETE FROM Fragrance WHERE fname = (%s) AND username = (%s)"
+      values = (name, username)
+      mycursor.execute(sql, values)
+      db_connection.commit()
+      print(f"{name} has been removed.\n")
+
+    except mysql.connector.Error as err:
+      print(f"An error occurred: {err}")
+
+  else:
+    print("Nothing to delete")
+    return
 
 # modify
 
@@ -191,7 +209,7 @@ def options(username):
       elif(details_options == 2):
         modify_perfume()
       elif(details_options == 3):
-        remove_perfume()
+        remove_perfume(username)
     case 3:
       perfume_statistics()
     case 4:
