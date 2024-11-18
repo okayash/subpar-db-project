@@ -1,10 +1,13 @@
---sample data c n p--
+
+-- sample data c --
 
 INSERT INTO PerfumeLine(pline, pyear)
-Values ('jhag', 2024);
+Values ('Opium', 1977);
 
-INSERT INTO Fragrance(fname, rating, creator, ftop, fheart,fbase,fline)
-VALUES('juliette', 8, 'roman ricci', 'a', 'b', 'c', 'jhag');
+INSERT INTO Fragrance(fname, rating, creator, ftop, fheart,fbase,fline, username)
+VALUES('Over Red', 8, 'YSL', 'a', 'b', 'c', 'Opium', 'ashley');
 
-INSERT INTO Users(username, password)
-VALUES('miroheiskanen', 'newpassword');
+INSERT INTO Users(username, password, first_name)
+VALUES('miroheiskanen', 'dallasstars', 'Miro'),
+('ashley', 'password', 'Ashley');
+

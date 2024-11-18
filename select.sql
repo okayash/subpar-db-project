@@ -8,4 +8,4 @@ SELECT * FROM Perfume;
 SELECT * FROM Perfumer;
 SELECT * FROM Cologne;
 SELECT * FROM F_release_date;
-SELECT * FROM user_collection;
+
