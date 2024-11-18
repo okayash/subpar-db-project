@@ -1,3 +1,5 @@
+# query functions
+
 import mysql.connector
 
 # connect details here
@@ -37,29 +39,32 @@ def login():
 
 # insertion
 # perfume insertion
+def insert_perfume():
+  print("You are inserting a perfume: ")
+
 # perfumer insertion
+def insert_perfumer():
+  print("You are inserting a perfumer: ")
 
 # deletion
 
 # perfume deletion
-# perfumer deletion
+def remove_perfume():
+  print("You are a removing a perfume")
 
 # modify
 
 # perfume modification
 def edit_perfume():
   print("Edit Perfume:")
+  perf_search = input("Which perfume would you like to edit?")
   # user enters perfume name
     #check if exists in user's collection
   # menu of details to edit
 
-
-# perfumer modification
-
-
 # user statistics
 def user_statistics():
-  print("Below is a list of your usage and rating statistics: \n")
+  print("Below is a list of possible usage and rating statistics to view: \n")
   # most commonly used notes
   # avg rating by base note
 
@@ -67,24 +72,47 @@ def user_statistics():
 def perfume_statistics():
   print("Below is a list of your collection statistics: \n")
   # show perfumes in each line
+
+def global_statistics():
+  # shows global stats for a perfume
+  search_perfume = input("Enter the name of a perfume to view global usage statistics")
+  # then display avg rating (mostly positive, mostly negative, mixed)
   
+  # print all users who own this perfume
+  
+
 # display perfumes
 def display_perf():
-  int(input("Options: \n1. View entire collection\n2. View Search Options"))
+  int(input("Options: \n1. View entire collection\n2. View Search Options\n3. View all perfumes in database:\n"))
   # add options for search by scent, family, creator, notes, rating, line
 
 
 # option menu
 def options(username):
-  option = int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n'))
-  if(option == 1):
-    print("in progress")
-  elif(option == 2):
-    print("wip")
-  else:
-    print("Please select one of the options.\n")
-    options(username)
+  option = int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
+  while option not in [1,2,3,4]:
+      print("Please select one of the options.\n")
+      options = int(input("Selection:\n"))
 
+  match option:
+    case 1:  
+      display_perf()
+    case 2:
+      details_options = int(input("Here, you can select to\n1. Add a scent\n2. Modify an existing scent\n3. Remove a scent:\n"))
+      while(details_options < 1 or details_options > 3):
+        details_options = int(input("Please select a valid option:\n"))
+ 
+      if(details_options == 1):
+        insert_perfume()
+      elif(details_options == 2):
+        modify_perfume()
+      elif(details_options == 3):
+        remove_perfume()
+    case 3:
+      perfume_statistics()
+    case 4:
+      global_statistics()
+      
 
 # create a new user
 def adduser():
@@ -135,3 +163,7 @@ def menu():
       menu()
 
 # add error handling maybe?
+
+
+def sign_out():
+  print("signing user out...")
