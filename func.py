@@ -60,17 +60,23 @@ def edit_perfume():
 # user statistics
 def user_statistics():
   print("Below is a list of your usage and rating statistics: \n")
+  # most commonly used notes
+  # avg rating by base note
 
 
+def perfume_statistics():
+  print("Below is a list of your collection statistics: \n")
+  # show perfumes in each line
+  
 # display perfumes
 def display_perf():
-  print("Options: \n1. View entire collection\n2. View Search Options")
-  # add options for search by scent, family, creator, notes, rating
+  int(input("Options: \n1. View entire collection\n2. View Search Options"))
+  # add options for search by scent, family, creator, notes, rating, line
 
 
 # option menu
 def options(username):
-  print(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics')
+  int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics'))
 
 # create a new user
 def adduser():
