@@ -44,7 +44,7 @@ def print_user_perfume(username):
 
 def print_global_perfumes():
   print(f"\nAll perfumes in database:\n")
-  mycursor.execute("SELECT fname FROM Fragrance")
+  mycursor.execute("SELECT Distinct fname FROM Fragrance")
   for x in mycursor:
     print(x)  
 

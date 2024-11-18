@@ -22,7 +22,7 @@ CREATE TABLE Fragrance(
 );
 
 CREATE TABLE Family(
-  sfamilyname VARCHAR(45),
+  sfamilyname VARCHAR(45) CHECK (sfamilyname IN ('Floral','Woody', 'Oriental', 'Fresh')),
   characteristic VARCHAR(50),
   PRIMARY KEY (sfamilyname, characteristic)
 );
@@ -57,8 +57,11 @@ CREATE TABLE Perfume_details(
   fheart VARCHAR(45),
   fbase VARCHAR(45),
   fline VARCHAR(45),
+  subfamily VARCHAR(45),
+  characteristic VARCHAR(45),
   FOREIGN KEY (fname) REFERENCES Fragrance(fname),
   FOREIGN KEY (fline) REFERENCES PerfumeLine(pline),
+  FOREIGN KEY (subfamily, characteristic) REFERENCES Family(sfamilyname, characteristic),
   PRIMARY KEY (fname, creator)
 );
 

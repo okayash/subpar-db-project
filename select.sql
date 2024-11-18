@@ -1,8 +1,7 @@
 -- select --
 SELECT * FROM PerfumeLine;
 SELECT * FROM Fragrance;
-SELECT * FROM Scentfamily;
-SELECT * FROM Subfamily;
+SELECT * FROM Family;
 SELECT * FROM Users;
 SELECT * FROM Perfume;
 SELECT * FROM Cologne;

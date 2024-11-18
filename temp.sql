@@ -25,7 +25,8 @@ VALUES('Over Red', 8, 'ashley'),
 ('Bombshell Paradise', 2, 'tylertoffoli');
 
 INSERT INTO Family(sfamilyname, characteristic)
-VALUES('wonderful scent family', 'odors');
+VALUES('Fresh', 'odors'),
+('Invalid', 'yes');
 
 INSERT INTO Perfume_details(fname, creator, ftop, fheart, fbase, fline)
 VALUES('Over Red', 'YSL', 'water', 'more water', 'cherry', 'Opium'),
