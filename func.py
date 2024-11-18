@@ -14,6 +14,7 @@ db_connection = mysql.connector.connect(
 mycursor = db_connection.cursor()
 sign_in = False
 
+# --------------------- login ---------------------
 # login
 def login():
   sign_in = False
@@ -42,7 +43,11 @@ def login():
     
     print("Login attempts exceeded. Exiting.")
     return None
- 
+
+
+# --------------------- queries ---------------------
+
+
 # print user's perfume
 def print_user_perfume(username):
    print(f"\n{username}'s perfumes:\n")
@@ -83,6 +88,23 @@ def insert_perfumer():
   print("You are inserting a perfumer: ")
   name = input("Name of Perfumer:\n")
   mycursor.execute("SELECT * FROM Perfumer WHERE pfname = (%s)", (name,))
+  existing_perfumer = mycursor.fetchone()
+  if existing_perfumer:
+    print("Perfumer already exists")
+    return
+ 
+  company = input("Enter a company name: \n")
+  
+  try:
+    sql = "INSERT INTO Perfumer (pfname, pcompany) VALUES (%s, %s)"
+    values = (name, company)
+    mycursor.execute(sql, values)
+    db_connection.commit()
+    print(f"\nPerfumer added into database with Name: {name} and Company: {company}\n")
+
+  except mysql.connector.Error as err:
+    print(f"An error occurred: {err}")
+
 
 # deletion
 
@@ -136,6 +158,8 @@ def display_perf(username):
       print("Displaying all perfumes in database")
       print_global_perfumes()
 
+
+# --------------------- user menus ---------------------
 # option menu
 def options(username):
   # get first name of user
