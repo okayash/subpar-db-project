@@ -75,8 +75,10 @@ def options(username):
 # create a new user
 def adduser():
   valid_user = False
+  valid_password = False
+
   print("Create the following user:\n")
-  while (valid_user != True):
+  while not valid_user:
     username = input("Username: ")
     mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,))
     user = mycursor.fetchone()
@@ -85,12 +87,24 @@ def adduser():
     else:
       valid_user = True
 
-  while len(password) < 10:
-    password = input("Password: ")    
-   
-  first_name = input("First name: ")
-  print(f"User: {username} successfully created with details: \n{username}\n{password}\n{first_name}")
-   
+  while not (valid_password):
+    password = input("\nPassword (10 characters or more): ")    
+    if(len(password) < 10):
+      print("Invalid password\n")
+    else:
+      valid_password = True
+
+      first_name = input("First name: ")
+
+  try:
+      sql = "INSERT INTO Users (username, password, first_name) VALUES (%s, %s, %s)"
+      values = (username, password, first_name)
+      mycursor.execute(sql, values)
+      db_connection.commit()
+      print(f"User: {username} successfully created with credentials: \nUsername: {username}\nFirst Name: {first_name}")
+  
+  except mysql.connector.Error as err:
+      print(f"An error occurred: {err}")   
     
 
 # menu
