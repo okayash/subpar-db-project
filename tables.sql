@@ -45,8 +45,8 @@ CREATE TABLE Cologne(
 
 CREATE TABLE F_release_date(
   fname VARCHAR(45) PRIMARY KEY,
-  month INTEGER,
-  year INTEGER NOT NULL,
+  month INTEGER CHECK (month > 0 AND month < 13),
+  year INTEGER NOT NULL CHECK (year > 1899),
   FOREIGN KEY (fname) REFERENCES Fragrance(fname)
 );
 

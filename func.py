@@ -20,21 +20,27 @@ def login():
   mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
   user = mycursor.fetchone()
 
-  if user:
+  while not user:
+    print(f"username {username} not found.")
+    login()
+  
+  attempts = 0  
+  while attempts < 5:
     password = input("password: ")
 
     if user[2] == password: # check stored passwords
       print("successfully logged in!")
       sign_in = True # user has successfully signed in
-      return user[0]
+      return (user[0])
 
-    else:
-      print("incorrect password")
-      login()
-  else:
-    print(f"username {username} not found.")
-    login()
 
+    print("Incorrect password")
+    attempts += 1
+    password = input("Password: ")
+    
+  print("Login attempts exceeded")
+  return None
+ 
 # print user's perfume
 def print_user_perfume(username):
    print(f"\n{username}'s perfumes:\n")
@@ -51,12 +57,30 @@ def print_global_perfumes():
 
 # insertion
 # perfume insertion
-def insert_perfume():
+def insert_perfume(username):
   print("You are inserting a perfume: ")
+  name = input("Enter perfume name: ")
+  mycursor.execute("SELECT * FROM Fragrance WHERE fname = (%s) AND username = (%s)", (name,username,))  
+  existing_perfume = mycursor.fetchone()
+  if existing_perfume:
+    print("Perfume already exists!\n")
+    return
+  
+  try:
+    sql = "INSERT INTO Fragrance (fname, username) VALUES (%s, %s)"
+    values = (name, username)
+    mycursor.execute(sql, values)
+    db_connection.commit()
+    print(f"Fragrance successfully created with name: \n{name}\nAdd additional details using the modify perfume option.")
+
+  except mysql.connector.Error as err:
+    print(f"An error occurred: {err}")
 
 # perfumer insertion
 def insert_perfumer():
   print("You are inserting a perfumer: ")
+  name = input("Name of Perfumer:\n")
+  mycursor.execute("SELECT * FROM Perfumer WHERE pfname = (%s)", (name,))
 
 # deletion
 
@@ -130,7 +154,7 @@ def options(username):
         details_options = int(input("Please select a valid option:\n"))
  
       if(details_options == 1):
-        insert_perfume()
+        insert_perfume(username)
       elif(details_options == 2):
         modify_perfume()
       elif(details_options == 3):
