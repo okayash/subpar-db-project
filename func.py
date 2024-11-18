@@ -132,6 +132,8 @@ def user_statistics():
 def perfume_statistics():
   print("Below is a list of your collection statistics: \n")
   # show perfumes in each line
+  
+  # avg rating
 
 def global_statistics():
   # shows global stats for a perfume
@@ -158,6 +160,11 @@ def display_perf(username):
       print("Displaying all perfumes in database")
       print_global_perfumes()
 
+# display a list of all perfumers
+def perfumer_data():
+  mycursor.execute("SELECT Distinct pfname FROM Perfumer")
+  for x in mycursor:
+    print(x)
 
 # --------------------- user menus ---------------------
 # option menu
@@ -166,7 +173,7 @@ def options(username):
   mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
   user = mycursor.fetchone()
 
-  option = int(input(f'Welcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
+  option = int(input(f'\nWelcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
   while option not in [1,2,3,4]:
     print("Please select one of the options.\n")
     option = int(input("Selection:\n"))
