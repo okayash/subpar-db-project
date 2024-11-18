@@ -14,7 +14,6 @@ db_connection = mysql.connector.connect(
 mycursor = db_connection.cursor()
 sign_in = False
 
-
 # login
 def login():
   username = input("username: ")
@@ -27,7 +26,7 @@ def login():
     if user[2] == password: # check stored passwords
       print("successfully logged in!")
       sign_in = True # user has successfully signed in
-      return user[3]
+      return user[0]
 
     else:
       print("incorrect password")
@@ -35,6 +34,19 @@ def login():
   else:
     print(f"username {username} not found.")
     login()
+
+# print user's perfume
+def print_user_perfume(username):
+   print(f"\n{username}'s perfumes:\n")
+   mycursor.execute("SELECT fname FROM Fragrance WHERE username = (%s)", (username,))
+   for x in mycursor:
+     print(x)
+
+def print_global_perfumes():
+  print(f"\nAll perfumes in database:\n")
+  mycursor.execute("SELECT fname FROM Fragrance")
+  for x in mycursor:
+    print(x)  
 
 
 # insertion
@@ -91,15 +103,20 @@ def display_perf(username):
   match display_options:
     case 1:
       print(f"Displaying perfumes for {username}")
+      print_user_perfume(username)
     case 2:
       print("Call search function here")
     case 3:
       print("Displaying all perfumes in database")
-
+      print_global_perfumes()
 
 # option menu
 def options(username):
-  option = int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
+  # get first name of user
+  mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
+  user = mycursor.fetchone()
+
+  option = int(input(f'Welcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
   while option not in [1,2,3,4]:
     print("Please select one of the options.\n")
     option = int(input("Selection:\n"))
