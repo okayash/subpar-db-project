@@ -76,7 +76,15 @@ def display_perf():
 
 # option menu
 def options(username):
-  int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics'))
+  option = int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n'))
+  if(option == 1):
+    print("in progress")
+  elif(option == 2):
+    print("wip")
+  else:
+    print("Please select one of the options.\n")
+    options(username)
+
 
 # create a new user
 def adduser():
