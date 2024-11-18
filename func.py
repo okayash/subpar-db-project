@@ -82,21 +82,31 @@ def global_statistics():
   
 
 # display perfumes
-def display_perf():
-  int(input("Options: \n1. View entire collection\n2. View Search Options\n3. View all perfumes in database:\n"))
+def display_perf(username):
+  display_options = int(input("Options: \n1. View your entire collection\n2. View Search Options\n3. View all perfumes in database:\n"))
   # add options for search by scent, family, creator, notes, rating, line
+  while display_options not in [1,2,3]:
+    display_options = int(input("Please select a valid input: "))
+  
+  match display_options:
+    case 1:
+      print(f"Displaying perfumes for {username}")
+    case 2:
+      print("Call search function here")
+    case 3:
+      print("Displaying all perfumes in database")
 
 
 # option menu
 def options(username):
   option = int(input(f'Welcome {username};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
   while option not in [1,2,3,4]:
-      print("Please select one of the options.\n")
-      options = int(input("Selection:\n"))
+    print("Please select one of the options.\n")
+    option = int(input("Selection:\n"))
 
   match option:
     case 1:  
-      display_perf()
+      display_perf(username)
     case 2:
       details_options = int(input("Here, you can select to\n1. Add a scent\n2. Modify an existing scent\n3. Remove a scent:\n"))
       while(details_options < 1 or details_options > 3):
