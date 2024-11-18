@@ -58,11 +58,11 @@ CREATE TABLE Perfume_details(
   fbase VARCHAR(45),
   fline VARCHAR(45),
   FOREIGN KEY (fname) REFERENCES Fragrance(fname),
+  FOREIGN KEY (fline) REFERENCES PerfumeLine(pline),
   PRIMARY KEY (fname, creator)
 );
 
 CREATE TABLE Perfumer(
-  pfname VARCHAR(45) PRIMARY KEY,
+  pfname VARCHAR(80) PRIMARY KEY,
   pcompany VARCHAR(45),
-  FOREIGN KEY (pfname) REFERENCES Perfume_details(creator)  
 );
