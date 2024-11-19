@@ -48,10 +48,10 @@ def login():
 # --------------------- queries ---------------------
 
 
-# print user's perfume
+# print user's perfume list
 def print_user_perfume(username):
-   print(f"\n{username}'s perfumes:\n")
-   mycursor.execute("SELECT fname FROM Fragrance WHERE username = (%s)", (username,))
+   print(f"\n{username}'s perfumes:\nname		rating")
+   mycursor.execute("SELECT fname, rating FROM Fragrance WHERE username = (%s)", (username,))
    for x in mycursor:
      print(x)
 
@@ -61,6 +61,17 @@ def print_global_perfumes():
   for x in mycursor:
     print(x)  
 
+# search perfumes , need to join frag and perf_details
+def search_perfumes(username):
+  search = input("Search a perfume by name: \n")
+  mycursor.execute("SELECT * FROM Fragrance WHERE fname = (%s) AND username = (%s)", (search,username,))
+  matches = mycursor.fetchone()
+  if matches:
+    for x in mycursor:
+      print(x)
+  
+  else:
+    print("No results found")
 
 # insertion
 # perfume insertion
@@ -146,7 +157,10 @@ def user_statistics():
   # most commonly used notes
   # avg rating by base note
 
-
+  print(f"Your most common base note is: \n")
+  
+  print("Average rating by family: ")
+  
 def perfume_statistics():
   print("Below is a list of your collection statistics: \n")
   # show perfumes in each line
@@ -155,7 +169,7 @@ def perfume_statistics():
 
 def global_statistics():
   # shows global stats for a perfume
-  search_perfume = input("Enter the name of a perfume to view global usage statistics")
+  search_perfume = input("Enter the name of a perfume to view global usage statistics\n")
   # then display avg rating (mostly positive, mostly negative, mixed)
   
   # print all users who own this perfume
@@ -173,7 +187,7 @@ def display_perf(username):
       print(f"Displaying perfumes for {username}")
       print_user_perfume(username)
     case 2:
-      print("Call search function here")
+      search_perfumes(username)
     case 3:
       print("Displaying all perfumes in database")
       print_global_perfumes()
