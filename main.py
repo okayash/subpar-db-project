@@ -10,7 +10,7 @@ def main():
     if username:
       func.options(username)
     
-    exit = input("Would you like to continue? a. Press 'x' to quit program, or any other key to continue managing your collectiom.\n")
+    exit = input("Would you like to continue? a. Press 'x' to quit program, or any other key to continue managing your collection.\n")
    
   print("Program exited")
   func.sign_out()   
