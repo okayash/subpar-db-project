@@ -201,6 +201,19 @@ def user_statistics(username):
       print(f"{x[0]}: {x[1]:.2f}")
     else:
       continue        
+  
+  # lines collected
+  mycursor.execute("""
+        SELECT DISTINCT pd.fline
+        FROM Perfume_details pd
+        JOIN Fragrance f ON pd.fname = f.fname
+        WHERE f.username = %s;
+        """, (username,))
+  lines = mycursor.fetchall()
+  if lines:
+    print(f'User owns part of the following lines ')
+    for data in lines:
+      print(data[0])
 
 def perfume_statistics(username):
   user_statistics(username)
@@ -380,3 +393,4 @@ def menu():
 
 def sign_out():
   print("signing user out...\n")
+  mycursor.close()
