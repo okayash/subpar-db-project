@@ -152,7 +152,7 @@ def modify_perfume(username):
   perfume_instance = mycursor.fetchone()
 
   if perfume_instance:
-    print(f"Editing perfume: {perf_search}\nSelect a detail to edit: \n1. Edit Rating\n2. Edit Base Note\n3. Edit Family\n4. Cancel")
+    print(f"Editing perfume: {perf_search}\nSelect a detail to edit: \n1. Edit Rating\n2. Edit Base Note\n3. Edit Family\n4. Cancel\n")
     option = int(input("Enter option number: "))
     
     while option not in [1,2,3,4]:
@@ -246,7 +246,7 @@ def global_statistics():
   result = mycursor.fetchone()
 
   if result:
-    print(f"Global average rating for {search_perfume}: {result[0]:.2f}")
+    print(f"Global average rating for {search_perfume}: {result[0]:.2f}\n")
     if result[0] > 5:
        print("Mostly positive")
     elif result[0] == 5:
@@ -298,7 +298,7 @@ def options(username):
   mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
   user = mycursor.fetchone()
 
-  option = int(input(f'\nWelcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n5. View perfumers'))
+  option = int(input(f'\nWelcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n5. View perfumers\n'))
   while option not in [1,2,3,4,5]:
     print("Please select one of the options.\n")
     option = int(input("Selection:\n"))

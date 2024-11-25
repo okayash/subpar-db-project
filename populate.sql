@@ -1,6 +1,7 @@
 -- Populate 
 -- database -- 
-CREATE database perfumedb;
+CREATE DATABASE IF NOT EXISTS perfumedb;
+USE perfumedb;
 
 -- tables --
 CREATE TABLE Users(
@@ -68,7 +69,7 @@ CREATE TABLE Perfume_details(
 
 CREATE TABLE Perfumer(
   pfname VARCHAR(80) PRIMARY KEY,
-  pcompany VARCHAR(45),
+  pcompany VARCHAR(45)
 );
 
 -- Add Data -- 
@@ -110,15 +111,4 @@ INSERT INTO Perfumer(pfname, pcompany)
 VALUES('YSL', 'Yves St Laurent'),
 ('Victorias Secret', 'VS');
 
--- Select
 
--- select --
-SELECT * FROM PerfumeLine;
-SELECT * FROM Fragrance;
-SELECT * FROM Family;
-SELECT * FROM Users;
-SELECT * FROM Perfume;
-SELECT * FROM Cologne;
-SELECT * FROM F_release_date;
-SELECT * FROM Perfume_details;
-SELECT * FROM Perfumer;
