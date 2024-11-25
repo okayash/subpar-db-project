@@ -166,7 +166,7 @@ def modify_perfume(username):
 
     elif option == 2:
       new_base_note = input("Enter new base note: ")
-      mycursor.execute("UPDATE Perfume_details SET base_note = (%s) WHERE fname = (%s)", (new_base_note, perf_search))
+      mycursor.execute("UPDATE Perfume_details SET fbase = (%s) WHERE fname = (%s)", (new_base_note, perf_search))
       db_connection.commit()
       print(f"Base note for {perf_search} updated to {new_base_note}.")
 
@@ -206,31 +206,30 @@ def perfume_statistics(username):
   user_statistics(username)
   print("Below is a list of your collection statistics: \n")
   # most commonly used base note
-  mycursor.execute(""" SELECT base_note, 
-  SELECT base_note, COUNT(*) as count
-        FROM Perfume_Details
-        JOIN Fragrance ON Perfume_Details.fname = Fragrance.fname
+  mycursor.execute(""" SELECT fbase, COUNT(*) as count
+        FROM Perfume_details
+        JOIN Fragrance ON Perfume_details.fname = Fragrance.fname
         WHERE Fragrance.username = %s
-        GROUP BY base_note
+        GROUP BY fbase
         ORDER BY count DESC
         """, (username,))
   common_bnote = mycursor.fetchone()
   if common_bnote:
-    print(f"Your most commonly used base note was: {common_bnte[0]}")
+    print(f"Your most commonly used base note was: {common_bnote[0]}")
   else: 
     print(f"You do not have any commonly used base notes.")
   # most commonly used family
   mycursor.execute("""
-        SELECT family, COUNT(*) as count
+        SELECT subfamily, COUNT(*) as count
         FROM Perfume_details
         JOIN Fragrance ON Perfume_details.fname = Fragrance.fname
         WHERE Fragrance.username = %s
-        GROUP BY family
+        GROUP BY subfamily
         ORDER BY count DESC
         """, (username,))
   common_fam = mycursor.fetchone()
   if common_fam:
-    print(f"Your most commonly used family is: {common_fam[0]}")
+    print(f"Your most commonly used sub family is: {common_fam[0]}")
   else:
     print(f"You do not have any commonly used families.")
  
