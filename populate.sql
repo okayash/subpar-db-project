@@ -29,22 +29,6 @@ CREATE TABLE Family(
   PRIMARY KEY (sfamilyname, characteristic)
 );
 
-CREATE TABLE Perfume(
-    pname VARCHAR(45),
-    oilper INTEGER,
-    sillage INTEGER,
-    FOREIGN KEY (pname) REFERENCES Fragrance(fname),
-    PRIMARY KEY (pname, oilper)
-);
-
-CREATE TABLE Cologne(
-  cname VARCHAR(45),
-  oilper INTEGER,
-  time_reapplication INTEGER,
-  FOREIGN KEY (cname) REFERENCES Fragrance(fname),
-  PRIMARY KEY (cname, oilper)
-);
-
 CREATE TABLE F_release_date(
   fname VARCHAR(45) PRIMARY KEY,
   month INTEGER CHECK (month > 0 AND month < 13),
@@ -100,8 +84,7 @@ VALUES('Over Red', 8, 'ashley'),
 ('Bombshell Paradise', 2, 'tylertoffoli');
 
 INSERT INTO Family(sfamilyname, characteristic)
-VALUES('Fresh', 'odors'),
-('Invalid', 'yes');
+VALUES('Fresh', 'odors');
 
 INSERT INTO Perfume_details(fname, creator, ftop, fheart, fbase, fline)
 VALUES('Over Red', 'YSL', 'water', 'more water', 'cherry', 'Opium'),
