@@ -39,12 +39,9 @@ CREATE TABLE F_release_date(
 CREATE TABLE Perfume_details(
   fname VARCHAR(45),
   creator VARCHAR(80) NOT NULL,
-  ftop VARCHAR(45),
-  fheart VARCHAR(45),
   fbase VARCHAR(45),
   fline VARCHAR(45),
   subfamily VARCHAR(45),
-  characteristic VARCHAR(45),
   FOREIGN KEY (fname) REFERENCES Fragrance(fname),
   FOREIGN KEY (fline) REFERENCES PerfumeLine(pline),
   FOREIGN KEY (subfamily, characteristic) REFERENCES Family(sfamilyname, characteristic),
