@@ -203,7 +203,12 @@ def perfume_statistics():
   print("Below is a list of your collection statistics: \n")
   # most commonly used base note
   mycursor.execute(""" SELECT base_note, 
-  
+  SELECT base_note, COUNT(*) as count
+        FROM Perfume_Details
+        JOIN Fragrance ON Perfume_Details.fname = Fragrance.fname
+        WHERE Fragrance.username = %s
+        GROUP BY base_note
+        ORDER BY count DESC
         """, (username))
   common_bnote = mycursor.fetchone()
   if common_bnote:
