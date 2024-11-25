@@ -144,7 +144,7 @@ def remove_perfume(username):
 # modify
 
 # perfume modification
-def edit_perfume():
+def modify_perfume(username):
   print("Edit Perfume:")
   perf_search = input("Which perfume would you like to edit?")
   # user enters perfume name
@@ -153,26 +153,30 @@ def edit_perfume():
 
   if perfume_instance:
     print(f"Editing perfume: {perf_search}\nSelect a detail to edit: \n1. Edit Rating\n2. Edit Base Note\n3. Edit Family\n4. Cancel")
-    option = input("Enter option number: ")
-    if option == '1':
-      new_rating = input("Enter new rating (1-5): ")
+    option = int(input("Enter option number: "))
+    
+    while option not in [1,2,3,4]:
+      option = int(input("Please choose one of the options"))
+
+    if option == 1:
+      new_rating = input("Enter new rating, max 10: ")
       mycursor.execute("UPDATE Fragrance SET rating = (%s) WHERE fname = (%s) AND username = (%s)", (new_rating, perf_search, username))
       db_connection.commit()
       print(f"Rating for {perf_search} updated to {new_rating}.")
 
-    elif option == '2':
+    elif option == 2:
       new_base_note = input("Enter new base note: ")
       mycursor.execute("UPDATE PerfumeDetails SET base_note = (%s) WHERE fname = (%s)", (new_base_note, perf_search))
       db_connection.commit()
       print(f"Base note for {perf_search} updated to {new_base_note}.")
 
-    elif option == '3':
+    elif option == 3:
       new_family = input("Enter new family: ")
       mycursor.execute("UPDATE PerfumeDetails SET family = (%s) WHERE fname = (%s)", (new_family, perf_search))
       db_connection.commit()
       print(f"Family for {perf_search} updated to {new_family}.")
 
-    elif option == '4':
+    elif option == 4:
       print("Edit cancelled.")
   else:
     print(f"Perfume {perf_search} not found in your collection.")
@@ -180,11 +184,9 @@ def edit_perfume():
   # menu of details to edit
 
 # user statistics
-def user_statistics():
+def user_statistics(username):
   print("Below is a list of possible usage and rating statistics to view: \n")
-  # most commonly used notes
-  # avg rating by base note
-  
+ 
   print(f"Your most common base note is: \n")
   
   print("Your average rating: ")
@@ -199,7 +201,7 @@ def user_statistics():
   for x in results:
     print(f"{x[0]}: {x[1]:.2f}")
 
-def perfume_statistics():
+def perfume_statistics(username):
   print("Below is a list of your collection statistics: \n")
   # most commonly used base note
   mycursor.execute(""" SELECT base_note, 
@@ -310,7 +312,7 @@ def options(username):
       if(details_options == 1):
         insert_perfume(username)
       elif(details_options == 2):
-        modify_perfume()
+        modify_perfume(username)
       elif(details_options == 3):
         remove_perfume(username)
     case 3:
