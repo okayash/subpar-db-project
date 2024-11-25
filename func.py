@@ -89,7 +89,7 @@ def insert_perfume(username):
     values = (name, username)
     mycursor.execute(sql, values)
     db_connection.commit()
-    print(f"Fragrance successfully created with name: \n{name}\nAdd additional details using the modify perfume option.")
+    print(f"Fragrance successfully created with name: \n{name}\nAdd additional details using the modify perfume option.\n")
 
   except mysql.connector.Error as err:
     print(f"An error occurred: {err}")
@@ -335,7 +335,7 @@ def adduser():
     mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,))
     user = mycursor.fetchone()
     if user:
-      print("Invalid username")
+      print("Invalid username\n")
     else:
       valid_user = True
 
@@ -379,4 +379,4 @@ def menu():
 
 
 def sign_out():
-  print("signing user out...")
+  print("signing user out...\n")
