@@ -166,13 +166,13 @@ def modify_perfume(username):
 
     elif option == 2:
       new_base_note = input("Enter new base note: ")
-      mycursor.execute("UPDATE PerfumeDetails SET base_note = (%s) WHERE fname = (%s)", (new_base_note, perf_search))
+      mycursor.execute("UPDATE Perfume_details SET base_note = (%s) WHERE fname = (%s)", (new_base_note, perf_search))
       db_connection.commit()
       print(f"Base note for {perf_search} updated to {new_base_note}.")
 
     elif option == 3:
       new_family = input("Enter new family: ")
-      mycursor.execute("UPDATE PerfumeDetails SET family = (%s) WHERE fname = (%s)", (new_family, perf_search))
+      mycursor.execute("UPDATE Perfume_details SET family = (%s) WHERE fname = (%s)", (new_family, perf_search))
       db_connection.commit()
       print(f"Family for {perf_search} updated to {new_family}.")
 
@@ -186,8 +186,6 @@ def modify_perfume(username):
 # user statistics
 def user_statistics(username):
   print("Below is a list of possible usage and rating statistics to view: \n")
- 
-  print(f"Your most common base note is: \n")
   
   print("Your average rating: ")
   mycursor.execute("""
@@ -199,9 +197,13 @@ def user_statistics(username):
 
   print("Average rating for each perfume in your collection:")
   for x in results:
-    print(f"{x[0]}: {x[1]:.2f}")
+    if x[1] is not None:
+      print(f"{x[0]}: {x[1]:.2f}")
+    else:
+      continue        
 
 def perfume_statistics(username):
+  user_statistics(username)
   print("Below is a list of your collection statistics: \n")
   # most commonly used base note
   mycursor.execute(""" SELECT base_note, 
@@ -211,7 +213,7 @@ def perfume_statistics(username):
         WHERE Fragrance.username = %s
         GROUP BY base_note
         ORDER BY count DESC
-        """, (username))
+        """, (username,))
   common_bnote = mycursor.fetchone()
   if common_bnote:
     print(f"Your most commonly used base note was: {common_bnte[0]}")
@@ -220,8 +222,8 @@ def perfume_statistics(username):
   # most commonly used family
   mycursor.execute("""
         SELECT family, COUNT(*) as count
-        FROM Perfume_Details
-        JOIN Fragrance ON Perfume_Details.fname = Fragrance.fname
+        FROM Perfume_details
+        JOIN Fragrance ON Perfume_details.fname = Fragrance.fname
         WHERE Fragrance.username = %s
         GROUP BY family
         ORDER BY count DESC
@@ -296,8 +298,8 @@ def options(username):
   mycursor.execute("SELECT * FROM Users WHERE username = (%s)", (username,)) # select usernames matching inputs
   user = mycursor.fetchone()
 
-  option = int(input(f'\nWelcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n'))
-  while option not in [1,2,3,4]:
+  option = int(input(f'\nWelcome {user[3]};\n Select an option: \n1. View your collection\n2. Add/Remove scents\n3. Check your statistics\n4.Check statistics among users\n5. View perfumers'))
+  while option not in [1,2,3,4,5]:
     print("Please select one of the options.\n")
     option = int(input("Selection:\n"))
 
@@ -316,9 +318,11 @@ def options(username):
       elif(details_options == 3):
         remove_perfume(username)
     case 3:
-      perfume_statistics()
+      perfume_statistics(username)
     case 4:
       global_statistics()
+    case 5:
+      perfumer_data()
       
 
 # create a new user
