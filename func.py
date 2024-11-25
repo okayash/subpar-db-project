@@ -148,6 +148,34 @@ def edit_perfume():
   print("Edit Perfume:")
   perf_search = input("Which perfume would you like to edit?")
   # user enters perfume name
+  mycursor.execute("SELECT * FROM Fragrance WHERE fname = (%s) AND username = (%s)", (perf_search, username))
+  perfume_instance = mycursor.fetchone()
+
+  if perfume_instance:
+    print(f"Editing perfume: {perf_search}\nSelect a detail to edit: \n1. Edit Rating\n2. Edit Base Note\n3. Edit Family\n4. Cancel")
+    option = input("Enter option number: ")
+    if option == '1':
+      new_rating = input("Enter new rating (1-5): ")
+      mycursor.execute("UPDATE Fragrance SET rating = (%s) WHERE fname = (%s) AND username = (%s)", (new_rating, perf_search, username))
+      db_connection.commit()
+      print(f"Rating for {perf_search} updated to {new_rating}.")
+
+    elif option == '2':
+      new_base_note = input("Enter new base note: ")
+      mycursor.execute("UPDATE PerfumeDetails SET base_note = (%s) WHERE fname = (%s)", (new_base_note, perf_search))
+      db_connection.commit()
+      print(f"Base note for {perf_search} updated to {new_base_note}.")
+
+    elif option == '3':
+      new_family = input("Enter new family: ")
+      mycursor.execute("UPDATE PerfumeDetails SET family = (%s) WHERE fname = (%s)", (new_family, perf_search))
+      db_connection.commit()
+      print(f"Family for {perf_search} updated to {new_family}.")
+
+    elif option == '4':
+      print("Edit cancelled.")
+  else:
+    print(f"Perfume {perf_search} not found in your collection.")
     #check if exists in user's collection
   # menu of details to edit
 
@@ -156,23 +184,79 @@ def user_statistics():
   print("Below is a list of possible usage and rating statistics to view: \n")
   # most commonly used notes
   # avg rating by base note
-
+  
   print(f"Your most common base note is: \n")
   
-  print("Average rating by family: ")
-  
+  print("Your average rating: ")
+  mycursor.execute("""
+        SELECT fname, AVG(rating) as avg_rating
+        FROM Fragrance
+        WHERE username = (%s)
+        GROUP BY fname""", (username,))
+  results = mycursor.fetchall()
+
+  print("Average rating for each perfume in your collection:")
+  for x in results:
+    print(f"{x[0]}: {x[1]:.2f}")
+
 def perfume_statistics():
   print("Below is a list of your collection statistics: \n")
-  # show perfumes in each line
+  # most commonly used base note
+  mycursor.execute(""" SELECT base_note, 
   
-  # avg rating
-
+        """, (username))
+  common_bnote = mycursor.fetchone()
+  if common_bnote:
+    print(f"Your most commonly used base note was: {common_bnte[0]}")
+  else: 
+    print(f"You do not have any commonly used base notes.")
+  # most commonly used family
+  mycursor.execute("""
+        SELECT family, COUNT(*) as count
+        FROM Perfume_Details
+        JOIN Fragrance ON Perfume_Details.fname = Fragrance.fname
+        WHERE Fragrance.username = %s
+        GROUP BY family
+        ORDER BY count DESC
+        """, (username,))
+  common_fam = mycursor.fetchone()
+  if common_fam:
+    print(f"Your most commonly used family is: {common_fam[0]}")
+  else:
+    print(f"You do not have any commonly used families.")
+ 
 def global_statistics():
   # shows global stats for a perfume
   search_perfume = input("Enter the name of a perfume to view global usage statistics\n")
   # then display avg rating (mostly positive, mostly negative, mixed)
-  
-  # print all users who own this perfume
+ 
+  mycursor.execute("""
+        SELECT AVG(rating) as avg_rating
+        FROM Fragrance
+        WHERE fname = (%s)""", (search_perfume,))
+  result = mycursor.fetchone()
+
+  if result:
+    print(f"Global average rating for {search_perfume}: {result[0]:.2f}")
+    if result[0] > 5:
+       print("Mostly positive")
+    elif result[0] == 5:
+       print("Mixed ratings")
+    else:
+       print("Mostly negative")
+    print("Owned by: ")
+    
+    mycursor.execute("""
+        SELECT username
+        FROM Fragrance
+        WHERE fname = (%s)
+    """, (search_perfume,))
+    owners = mycursor.fetchall()
+    for x in owners:
+      print(f"- {x[0]}")
+      
+  else:
+    print(f"No global data found for {search_perfume}.")
   
 
 # display perfumes
